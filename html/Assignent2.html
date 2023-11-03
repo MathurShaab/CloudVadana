@@ -1,0 +1,201 @@
+<!-- B. Create a survey form with Fields; First Name, Last Name, Date of Birth, Country (dropdown),
+Gender (checkbox), Profession, email, and mobile number. All the input fields are
+necessary to submit the form. Create two buttons Submit and Reset. Reset will reset the
+form while clicking on submit, first, it will check all the fields and necessary validations and
+then a popup will appear displaying all the selected values with the label in front of it. On
+closing the popup, the form should reset all the values. Use the following for reference -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #0d90b8;
+        }
+
+        .form-container {
+            background-color: white;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            box-shadow: 0 0 10px #aaa;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .gender-label {
+            display: block;
+        }
+
+        .questions {
+            margin-bottom: 10px;
+        }
+
+        .radio-label {
+            display: block;
+        }
+
+        .radio-input {
+            margin-left: 20px;
+        }
+
+        .feedback {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .submit-button,
+        .reset-button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .reset-button {
+            background-color: #ccc;
+        }
+
+        .popup {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1;
+            text-align: center;
+        }
+
+        .popup-content {
+            background-color: white;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 300px;
+            margin: 100px auto;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1 style="text-align: center; color: #fffefe;">Customer Survey Form</h1>
+    <div class="form-container">
+        <form id="survey-form">
+            <label for="name">Name:</label>
+            <input type="text" id="name" required>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" required>
+
+            <div class="questions">
+                <label for="q1" class="radio-label">Is this first tie you using our product and service ?</label>
+                <input type="radio" id="q1" class="radio-input" name="question1" value="Answer 1"> Yes
+                <input type="radio" id="q1" class="radio-input" name="question1" value="Answer 2"> No
+ 
+            </div>
+
+            <div class="questions">
+                <label for="q2" class="radio-label">Would you Suggestion to your friends and colleague ?</label>
+                <input type="radio" id="q2" class="radio-input" name="question2" value="Answer 1"> Yes
+                <input type="radio" id="q2" class="radio-input" name="question2" value="Answer 2"> No
+
+            </div>
+
+            <div class="questions">
+                <label for="q3" class="radio-label">How Satisfied are you with our company overall ?</label>
+                <input type="radio" id="q3" class="radio-input" name="question3" value="Answer 1"> Satisfied
+                <input type="radio" id="q3" class="radio-input" name="question3" value="Answer 2"> Undecided
+                <input type="radio" id="q3" class="radio-input" name="question3" value="Answer 3"> UnSatisfied
+            </div>
+
+            <label for="feedback">Do You Suggestion to improve our service:</label>
+            <textarea id="feedback" class="feedback" required></textarea>
+
+            <button type="button" class="submit-button" onclick="submitForm()">Submit</button>
+            <button type="button" class="reset-button" onclick="resetForm()">Reset</button>
+        </form>
+    </div>
+
+    <div id="popup" class="popup">
+        <div class="popup-content" id="popup-content">
+            <!-- Selected values will be displayed here -->
+        </div>
+    </div>
+    <footer>
+        <p style="text-align: center; color: #fffefe;">@ 20218 Customer Survey Form. All rights reserved.| <b style="color: #6200ff;">W3Layout</b> </p> 
+    </footer>
+    <script>
+        function submitForm() {
+            // Validate the form
+            const name = document.getElementById("name").value;
+            const email = document.getElementById("email").value;
+            const question1 = document.querySelector('input[name="question1"]:checked');
+            const question2 = document.querySelector('input[name="question2"]:checked');
+            const question3 = document.querySelector('input[name="question3"]:checked');
+            const feedback = document.getElementById("feedback").value;
+
+            if (!name || !email || !question1 || !question2 || !question3 || !feedback) {
+                alert("Please fill in all the required fields.");
+                return;
+            }
+
+            // Display the popup with selected values
+            const popupContent = document.getElementById("popup-content");
+            popupContent.innerHTML = `
+                <p><strong>Name:</strong> ${name}</p>
+                <p><strong>Email:</strong> ${email}</p>
+                <p><strong>Question 1:</strong> ${question1.value}</p>
+                <p><strong>Question 2:</strong> ${question2.value}</p>
+                <p><strong>Question 3:</strong> ${question3.value}</p>
+                <p><strong>Feedback:</strong> ${feedback}</p>
+            `;
+
+            // Show the popup
+            document.getElementById("popup").style.display = "block";
+
+            // Reset the form
+            resetForm();
+        }
+
+        function resetForm() {
+            document.getElementById("survey-form").reset();
+        }
+
+        // Close the popup when clicking outside of it
+        document.getElementById("popup").addEventListener("click", function (event) {
+            if (event.target === this) {
+                this.style.display = "none";
+            }
+        });
+    </script>
+</body>
+</html>

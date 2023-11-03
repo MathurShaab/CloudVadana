@@ -1,0 +1,129 @@
+<!-- A. Create a basic calculator using HTML, CSS, and JavaScript with the functionality of add,
+subtract, multiply and divide. Use the following picture for reference. -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            background-color: #444; 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .calculator {
+            width: 300px;
+            margin: 0 auto;
+            border: 2px solid #ccc;
+            border-radius: 10px;
+            padding: 10px;
+            text-align: center;
+            box-shadow: 0 0 10px #aaa;
+        }
+
+        #display {
+            width: 100%;
+            margin-bottom: 10px;
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 20px;
+        }
+
+        .input-group {
+            display: flex;
+            align-items: center;
+        }
+
+        .clear-button {
+            padding: 10px;
+            font-size: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: rgb(12, 196, 104);
+            color: white;
+            cursor: pointer;
+        }
+
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 5px;
+        }
+
+        .numeric-button {
+            padding: 10px;
+            font-size: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: black;
+            color: white;
+            cursor: pointer;
+        }
+
+        .operator-button {
+            padding: 10px;
+            font-size: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f0f0f0;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #ccc;
+        }
+    </style>
+</head>
+<body>
+    <div class="calculator">
+        <div class="input-group">
+            <input type="text" id="display" disabled>
+            <button class="clear-button" onclick="clearDisplay()">C</button>
+        </div>
+        <div class="buttons">
+            <button class="numeric-button" onclick="appendToDisplay('7')">7</button>
+            <button class="numeric-button" onclick="appendToDisplay('8')">8</button>
+            <button class="numeric-button" onclick="appendToDisplay('9')">9</button>
+            <button class="operator-button" onclick="appendToDisplay('+')">+</button>
+            <button class="numeric-button" onclick="appendToDisplay('4')">4</button>
+            <button class="numeric-button" onclick="appendToDisplay('5')">5</button>
+            <button class="numeric-button" onclick="appendToDisplay('6')">6</button>
+            <button class="operator-button" onclick="appendToDisplay('-')">-</button>
+            <button class="numeric-button" onclick="appendToDisplay('1')">1</button>
+            <button class="numeric-button" onclick="appendToDisplay('2')">2</button>
+            <button class="numeric-button" onclick="appendToDisplay('3')">3</button>
+            <button class="operator-button" onclick="appendToDisplay('*')">*</button>
+            <button class="numeric-button" onclick="appendToDisplay('0')">0</button>
+            <button class="numeric-button" onclick="appendToDisplay('.')">.</button>
+            <button onclick="calculate()" class="operator-button">=</button>
+            <button class="operator-button" onclick="appendToDisplay('/')">/</button>
+        </div>
+    </div>
+
+    <script>
+        let displayValue = '';
+
+        function appendToDisplay(value) {
+            displayValue += value;
+            document.getElementById('display').value = displayValue;
+        }
+
+        function clearDisplay() {
+            displayValue = '';
+            document.getElementById('display').value = '';
+        }
+
+        function calculate() {
+            try {
+                displayValue = eval(displayValue).toString();
+                document.getElementById('display').value = displayValue;
+            } catch (error) {
+                document.getElementById('display').value = 'Error';
+            }
+        }
+    </script>
+</body>
+</html>
